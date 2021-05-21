@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import { useHistory } from "react-router-dom";
+import { BrowserRouter, useHistory } from "react-router-dom";
 
 export const MoviesList = () => {
   let history = useHistory();
@@ -35,7 +35,7 @@ export const MoviesList = () => {
           <td>{movie.Title}</td>
           <td>{movie.Year}</td>
           <td>
-            <button onClick={handleClick(movie.imdbID)}>
+            <button onClick={() => handleClick(movie.imdbID)}>
               See Movie Details
             </button>
           </td>
@@ -45,4 +45,9 @@ export const MoviesList = () => {
   );
 };
 
-ReactDOM.render(<MoviesList />, document.getElementById("root"));
+ReactDOM.render(
+  <BrowserRouter>
+    <MoviesList />
+  </BrowserRouter>,
+  document.getElementById("root")
+);

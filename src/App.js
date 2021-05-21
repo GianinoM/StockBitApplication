@@ -41,7 +41,7 @@ export default function BasicExample() {
           <Route path="/movies">
             <MoviesList />
           </Route>
-          <Route path="/movies/detail">
+          <Route path="/dashboard">
             <Dashboard />
           </Route>
         </Switch>
