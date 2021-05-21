@@ -59,7 +59,7 @@ function AnagramBoard() {
   return (
     <div>
       <h2> this is my work regarding the first question</h2>
-      <Anagram />;
+      <Anagram />
     </div>
   );
 }
