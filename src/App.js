@@ -17,7 +17,7 @@ export default function BasicExample() {
       <div>
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/anagram">Anagram</Link>
           </li>
           <li>
             <Link to="/about">About</Link>
@@ -37,8 +37,8 @@ export default function BasicExample() {
           of them to render at a time
         */}
         <Switch>
-          <Route exact path="/">
-            <Home />
+          <Route exact path="/anagram">
+            <AnagramBoard />
           </Route>
           <Route path="/about">
             <About />
@@ -55,14 +55,19 @@ export default function BasicExample() {
 // You can think of these components as "pages"
 // in your app.
 
-function Home() {
-  return <Anagram />;
+function AnagramBoard() {
+  return (
+    <div>
+      <h2> this is my work regarding the first question</h2>
+      <Anagram />;
+    </div>
+  );
 }
 
 function About() {
   return (
     <div>
-      <h2>About</h2>
+      <h2>Movie Site</h2>
     </div>
   );
 }

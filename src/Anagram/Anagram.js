@@ -46,6 +46,9 @@ export class Anagram extends React.Component {
           }
         }
       }
+      sortedGroupedWords.push('["' + words[i] + '"]');
+      if (groupedWords[i] !== groupedWords[i + 1])
+        sortedGroupedWords.push(<br />);
       prevIndex = i;
     }
 
@@ -69,9 +72,7 @@ export class Anagram extends React.Component {
         <br />
         Hasil
         <br />
-        {groupedWords.join(",")}
-        <br />
-        {words.join(",")}
+        {sortedGroupedWords}
       </div>
     );
   }
