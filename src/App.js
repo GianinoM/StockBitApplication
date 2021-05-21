@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Anagram } from "./Anagram/Anagram";
+import { MoviesList } from "./MoviesBoard/MoviesList";
 
 // This site has 3 pages, all of which are rendered
 // dynamically in the browser (not server rendered).
@@ -20,10 +21,7 @@ export default function BasicExample() {
             <Link to="/anagram">Anagram</Link>
           </li>
           <li>
-            <Link to="/about">About</Link>
-          </li>
-          <li>
-            <Link to="/dashboard">Dashboard</Link>
+            <Link to="/movies">Movies</Link>
           </li>
         </ul>
 
@@ -40,10 +38,10 @@ export default function BasicExample() {
           <Route exact path="/anagram">
             <AnagramBoard />
           </Route>
-          <Route path="/about">
-            <About />
+          <Route path="/movies">
+            <MoviesList />
           </Route>
-          <Route path="/dashboard">
+          <Route path="/movies/detail">
             <Dashboard />
           </Route>
         </Switch>
@@ -60,14 +58,6 @@ function AnagramBoard() {
     <div>
       <h2> this is my work regarding the first question</h2>
       <Anagram />
-    </div>
-  );
-}
-
-function About() {
-  return (
-    <div>
-      <h2>Movie Site</h2>
     </div>
   );
 }
