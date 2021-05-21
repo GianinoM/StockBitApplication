@@ -17,25 +17,19 @@ export class Anagram extends React.Component {
     return splitWords;
   }
 
-  existInArray(word, Array) {
-    for (let i in Array) {
-      if (word === Array[i]) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   render() {
     let words = ["kita", "atik", "tika", "aku", "kia", "makan", "kua"];
     let groupedWords = [];
+    let clonedWords = [];
     let sortedGroupedWords = [];
 
     for (let i in words) {
       groupedWords.push(this.sort(words[i]).join(""));
+      clonedWords.push(this.sort(words[i]).join(""));
     }
 
     let prevIndex = 0;
+    sortedGroupedWords.push("[");
     for (let i = 0; i < groupedWords.length; i++) {
       for (let s = i; s < groupedWords.length; s++) {
         if (groupedWords[prevIndex] === groupedWords[s]) {
@@ -43,14 +37,25 @@ export class Anagram extends React.Component {
             var tmp = words[i];
             words[i] = words[s];
             words[s] = tmp;
+
+            var tmp2 = clonedWords[i];
+            clonedWords[i] = clonedWords[s];
+            clonedWords[s] = tmp2;
           }
         }
       }
-      sortedGroupedWords.push('["' + words[i] + '"]');
-      if (groupedWords[i] !== groupedWords[i + 1])
+      sortedGroupedWords.push('"' + words[i] + '",');
+      if (
+        clonedWords[i] !== clonedWords[i + 1] &&
+        clonedWords[i] === clonedWords[prevIndex]
+      ) {
+        sortedGroupedWords.push("],");
         sortedGroupedWords.push(<br />);
+        sortedGroupedWords.push("[");
+      }
       prevIndex = i;
     }
+    sortedGroupedWords.push("],");
 
     return (
       <div>
