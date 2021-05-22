@@ -68,8 +68,33 @@ export const MoviesList = () => {
       dispatch(searchMoreMovies(keyword, page));
       setPage(page + 1);
       setLoading(false);
-    }, 5000);
+    }, 3000);
   };
+
+  let displayMovies = [];
+  if (movies && movies.length) {
+    for (let mv in movies) {
+      displayMovies.push(
+        <tr>
+          <td>
+            <img
+              src={movies[mv].Poster}
+              alt="Poster"
+              width="50px"
+              onClick={() => handleImageClick(movies[mv].Poster)}
+            />
+          </td>
+          <td>{movies[mv].Title}</td>
+          <td>{movies[mv].Year}</td>
+          <td>
+            <button onClick={() => handleClick(movies[mv].imdbID)}>
+              See Movie Details
+            </button>
+          </td>
+        </tr>
+      );
+    }
+  }
 
   return (
     <>
@@ -91,27 +116,7 @@ export const MoviesList = () => {
           <th>Year</th>
           <th>-</th>
         </tr>
-        {movies &&
-          movies.length &&
-          movies.map((movie) => (
-            <tr>
-              <td>
-                <img
-                  src={movie.Poster}
-                  alt="Poster"
-                  width="50px"
-                  onClick={() => handleImageClick(movie.Poster)}
-                />
-              </td>
-              <td>{movie.Title}</td>
-              <td>{movie.Year}</td>
-              <td>
-                <button onClick={() => handleClick(movie.imdbID)}>
-                  See Movie Details
-                </button>
-              </td>
-            </tr>
-          ))}
+        {displayMovies}
         {loading && "Loading..."}
         {showDialog && (
           <Modal
