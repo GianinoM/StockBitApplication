@@ -1,21 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, useHistory } from "react-router-dom";
 import Modal from "react-modal";
 import "./MoviesBoard.css";
 import { useDispatch, useSelector } from "react-redux";
-import { searchMovies } from "./store/actions/moviesActions";
+import { searchMovies, searchMoreMovies } from "./store/actions/moviesActions";
 
 import { Provider } from "react-redux";
 import store from "./store";
 
 export const MoviesList = () => {
   let history = useHistory();
+
   const [imageUrl, setImageUrl] = useState(null);
   const [showDialog, setShowDialog] = useState(false);
   const [keyword, setKeyword] = useState("");
+  const [page, setPage] = useState(0);
+  const [loading, setLoading] = useState(false);
+
   const dispatch = useDispatch();
   const movies = useSelector((state) => state.movies.movies.Search);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    if (!loading) {
+      return;
+    }
+    handleSearchMoreMovies();
+  }, [loading, dispatch, setPage, keyword, page]);
+
+  const handleScroll = () => {
+    if (
+      window.innerHeight + document.documentElement.scrollTop !==
+      document.documentElement.offsetHeight
+    )
+      setLoading(true);
+  };
 
   const handleClick = (imdbID) => {
     history.push("/movies/" + imdbID);
@@ -36,6 +60,15 @@ export const MoviesList = () => {
 
   const handleSearch = () => {
     dispatch(searchMovies(keyword));
+    setPage(page + 1);
+  };
+
+  const handleSearchMoreMovies = () => {
+    setTimeout(() => {
+      dispatch(searchMoreMovies(keyword, page));
+      setPage(page + 1);
+      setLoading(false);
+    }, 5000);
   };
 
   return (
@@ -79,6 +112,7 @@ export const MoviesList = () => {
               </td>
             </tr>
           ))}
+        {loading && "Loading..."}
         {showDialog && (
           <Modal
             isOpen={showDialog}

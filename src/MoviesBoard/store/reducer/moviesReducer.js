@@ -1,4 +1,4 @@
-import { SEARCH_MOVIES } from "../../constants";
+import { SEARCH_MORE_MOVIES, SEARCH_MOVIES } from "../../constants";
 
 const initialState = {
   movies: [],
@@ -15,7 +15,32 @@ export default function (state = initialState, action) {
         keyword: "",
         loading: false,
       };
+
+    case SEARCH_MORE_MOVIES:
+      return {
+        ...state,
+        movies: {
+          ...action.payload,
+          Search: [...state.movies.Search, ...action.payload.Search],
+        },
+      };
     default:
       return state;
   }
+}
+
+function updateMoviews(state, action) {
+  return {
+    ...state,
+    first: {
+      ...state.first,
+      second: {
+        ...state.first.second,
+        [action.someId]: {
+          ...state.first.second[action.someId],
+          fourth: action.someValue,
+        },
+      },
+    },
+  };
 }
