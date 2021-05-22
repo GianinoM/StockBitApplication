@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Anagram } from "./Anagram/Anagram";
+import { MoviePage } from "./MoviesBoard/MoviePage";
 import { MoviesList } from "./MoviesBoard/MoviesList";
 
 // This site has 3 pages, all of which are rendered
@@ -38,11 +39,11 @@ export default function BasicExample() {
           <Route exact path="/anagram">
             <AnagramBoard />
           </Route>
-          <Route path="/movies">
+          <Route exact={true} path="/movies">
             <MoviesList />
           </Route>
-          <Route path="/dashboard">
-            <Dashboard />
+          <Route path="/movies/:imdbID">
+            <MoviePage />
           </Route>
         </Switch>
       </div>
@@ -58,14 +59,6 @@ function AnagramBoard() {
     <div>
       <h2> this is my work regarding the first question</h2>
       <Anagram />
-    </div>
-  );
-}
-
-function Dashboard() {
-  return (
-    <div>
-      <h2>Dashboard</h2>
     </div>
   );
 }

@@ -16,7 +16,7 @@ export const MoviesList = () => {
   }, []);
 
   const handleClick = (imdbID) => {
-    history.push("/details?imdbID=" + imdbID);
+    history.push("/movies/" + imdbID);
   };
 
   return (
