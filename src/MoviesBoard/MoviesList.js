@@ -1,23 +1,21 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, useHistory } from "react-router-dom";
 import Modal from "react-modal";
 import "./MoviesBoard.css";
+import { useDispatch, useSelector } from "react-redux";
+import { searchMovies } from "./store/actions/moviesActions";
+
+import { Provider } from "react-redux";
+import store from "./store";
 
 export const MoviesList = () => {
   let history = useHistory();
   const [imageUrl, setImageUrl] = useState(null);
   const [showDialog, setShowDialog] = useState(false);
-  const [movies, setMovies] = useState([
-    { movies: [{ Poster: "", Title: "", Year: "", imdbID: "" }] },
-  ]);
-
-  useEffect(() => {
-    axios.get(`http://www.omdbapi.com?apikey=faf7e5bb&s=Batman`).then((res) => {
-      setMovies(res.data.Search);
-    });
-  }, []);
+  const [keyword, setKeyword] = useState("");
+  const dispatch = useDispatch();
+  const movies = useSelector((state) => state.movies.movies.Search);
 
   const handleClick = (imdbID) => {
     history.push("/movies/" + imdbID);
@@ -32,16 +30,26 @@ export const MoviesList = () => {
     setShowDialog(!showDialog);
   };
 
+  const handleInputChange = (e) => {
+    setKeyword(e.target.value);
+  };
+
+  const handleSearch = () => {
+    dispatch(searchMovies(keyword));
+  };
+
   return (
     <>
       <table>
         <tr>
           <td colSpan="3">
-            <label>Input Keyword:</label>
-            <input type="text" />
+            <label>Input Keyword: </label>
+            <input type="text" name="keyword" onChange={handleInputChange} />
           </td>
           <td colSpan="2">
-            <button style={{ width: 100 }}>Search</button>
+            <button style={{ width: 100 }} onClick={() => handleSearch()}>
+              Search
+            </button>
           </td>
         </tr>
         <tr>
@@ -50,25 +58,27 @@ export const MoviesList = () => {
           <th>Year</th>
           <th>-</th>
         </tr>
-        {movies.map((movie) => (
-          <tr>
-            <td>
-              <img
-                src={movie.Poster}
-                alt="Poster"
-                width="50px"
-                onClick={() => handleImageClick(movie.Poster)}
-              />
-            </td>
-            <td>{movie.Title}</td>
-            <td>{movie.Year}</td>
-            <td>
-              <button onClick={() => handleClick(movie.imdbID)}>
-                See Movie Details
-              </button>
-            </td>
-          </tr>
-        ))}
+        {movies &&
+          movies.length &&
+          movies.map((movie) => (
+            <tr>
+              <td>
+                <img
+                  src={movie.Poster}
+                  alt="Poster"
+                  width="50px"
+                  onClick={() => handleImageClick(movie.Poster)}
+                />
+              </td>
+              <td>{movie.Title}</td>
+              <td>{movie.Year}</td>
+              <td>
+                <button onClick={() => handleClick(movie.imdbID)}>
+                  See Movie Details
+                </button>
+              </td>
+            </tr>
+          ))}
         {showDialog && (
           <Modal
             isOpen={showDialog}
@@ -88,7 +98,9 @@ export const MoviesList = () => {
 
 ReactDOM.render(
   <BrowserRouter>
-    <MoviesList />
+    <Provider store={store}>
+      <MoviesList />
+    </Provider>
   </BrowserRouter>,
   document.getElementById("root")
 );

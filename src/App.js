@@ -1,8 +1,10 @@
 import React from "react";
+import { Provider } from "react-redux";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Anagram } from "./Anagram/Anagram";
 import { MoviePage } from "./MoviesBoard/MoviePage";
 import { MoviesList } from "./MoviesBoard/MoviesList";
+import store from "./MoviesBoard/store";
 
 // This site has 3 pages, all of which are rendered
 // dynamically in the browser (not server rendered).
@@ -40,7 +42,9 @@ export default function BasicExample() {
             <AnagramBoard />
           </Route>
           <Route exact={true} path="/movies">
-            <MoviesList />
+            <Provider store={store}>
+              <MoviesList />
+            </Provider>
           </Route>
           <Route path="/movies/:imdbID">
             <MoviePage />
