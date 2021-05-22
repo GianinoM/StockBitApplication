@@ -7,7 +7,7 @@ export class Anagram extends React.Component {
     for (let i = 0; i < splitWords.length; i++) {
       for (let s = 0; s < splitWords.length; s++) {
         if (splitWords[i].charCodeAt(0) < splitWords[s].charCodeAt(0)) {
-          var tmp = splitWords[i];
+          let tmp = splitWords[i];
           splitWords[i] = splitWords[s];
           splitWords[s] = tmp;
         }
