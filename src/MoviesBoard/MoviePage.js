@@ -1,16 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import {
-  BrowserRouter,
-  useHistory,
-  useLocation,
-  useRouteMatch,
-} from "react-router-dom";
+import { BrowserRouter, useRouteMatch } from "react-router-dom";
 
 export const MoviePage = () => {
   let match = useRouteMatch();
-
   const [movieDetail, setMovieDetail] = useState([
     {
       movieDetail: [
@@ -36,7 +30,7 @@ export const MoviePage = () => {
       .then((res) => {
         setMovieDetail(res.data);
       });
-  }, []);
+  }, [match]);
 
   return (
     <table>
