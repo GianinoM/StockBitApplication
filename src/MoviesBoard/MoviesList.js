@@ -31,7 +31,7 @@ export const MoviesList = () => {
       return;
     }
     handleSearchMoreMovies();
-  }, [loading, dispatch, setPage, keyword, page]);
+  }, [loading]);
 
   const handleScroll = () => {
     if (

@@ -28,19 +28,3 @@ export default function (state = initialState, action) {
       return state;
   }
 }
-
-function updateMoviews(state, action) {
-  return {
-    ...state,
-    first: {
-      ...state.first,
-      second: {
-        ...state.first.second,
-        [action.someId]: {
-          ...state.first.second[action.someId],
-          fourth: action.someValue,
-        },
-      },
-    },
-  };
-}
